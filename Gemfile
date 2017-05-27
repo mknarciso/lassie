@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+# API.ai 
+gem 'api-ai-ruby'
+
+# bootstrap style
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
