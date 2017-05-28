@@ -2,12 +2,15 @@ class WebhookController < ApplicationController
     protect_from_forgery with: :null_session
     respond_to :json
     def api
-        #puts "\n\n\n\n\n"
-        #puts get_params
-        
+        query = get_params[:result][:resolvedQuery]
+        qna = QnaMaker.new
+        hash = '{"question": "' + query + '", "top": 1}'
+        my_hash = JSON.parse(hash)
+        puts my_hash
+        answer = JSON.parse(qna.generateAnswer(JSON.generate(my_hash)))
         respond_to do |format|
             format.json {
-                msg = { :speech => "Agora vai!", :displayText => "Vai Vai!", :source => "api-rails-sample" }
+                msg = { :speech => CGI.unescapeHTML(answer["answers"].first["answer"]).encode("utf-8"), :displayText => answer["answers"].first["answer"], :source => "api-rails-sample" }
                 render :json => msg
             }
         end
@@ -16,6 +19,11 @@ class WebhookController < ApplicationController
     private
         def get_params
             params.require(:webhook).permit! 
+        end
+        
+        #def get_answer
+        #   params.require(:answer).permit! 
+        #end
 #{
 #    "id"=>"d0701386-7d00-4f97-9b35-54e81d2ab531", 
 #    "timestamp"=>"2017-05-28T01:27:59.332Z", 
@@ -46,8 +54,6 @@ class WebhookController < ApplicationController
 #    "sessionId"=>"4d7b9e8b-26c4-4b04-8c60-018030776be0"
 #    
 #}        
-        
-        end
         
         
 end

@@ -17,4 +17,4 @@
 /tmp
 
 # Ignore env variables
-/config/application.ymlS
+/config/application.yml

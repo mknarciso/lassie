@@ -74,7 +74,7 @@ class QnaMaker
             http.request(request)
         end
         
-        puts response.body
+        response.body
     end
     
     def publishKB(bodyRequest)
