@@ -1,6 +1,6 @@
 require 'net/http'
 
-class QnaMaker < ActiveRecord::Base
+class QnaMaker
     def self.createKB(bodyRequest)
         uri = URI('https://westus.api.cognitive.microsoft.com/qnamaker/v2.0/knowledgebases/create')
         uri.query = URI.encode_www_form({
