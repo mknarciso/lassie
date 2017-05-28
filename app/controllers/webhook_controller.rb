@@ -8,11 +8,21 @@ class WebhookController < ApplicationController
         my_hash = JSON.parse(hash)
         puts my_hash
         answer = JSON.parse(qna.generateAnswer(JSON.generate(my_hash)))
-        respond_to do |format|
-            format.json {
-                msg = { :speech => CGI.unescapeHTML(answer["answers"].first["answer"]).encode("utf-8"), :displayText => answer["answers"].first["answer"], :source => "api-rails-sample" }
-                render :json => msg
-            }
+        stringAnswer = CGI.unescapeHTML(answer["answers"].first["answer"]).encode("utf-8")
+        
+        if stringAnswer == "No good match found in the KB"
+            testmony = Testimony.new
+            resString = testmony.tweetJSON(JSON.generate(my_hash))
+            resHash = '{"answers": ["answer": I still dont have this answer. However, I called my ninjas to answer it! Check it out: ' + resString + '] }'
+            parsedHash = JSON.parse(resHash)
+            return JSON.generate(parsedHash)
+        else    
+            respond_to do |format|
+                format.json {
+                    msg = { :speech => CGI.unescapeHTML(answer["answers"].first["answer"]).encode("utf-8"), :displayText => answer["answers"].first["answer"], :source => "api-rails-sample" }
+                    render :json => msg
+                }
+            end
         end
     end
     
