@@ -17,7 +17,7 @@ class QnaMaker
         response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
             http.request(request)
         end
-        puts response.body
+        response.body
         
     end
     
@@ -36,7 +36,7 @@ class QnaMaker
             http.request(request)
         end
         
-        puts response.body
+        response.body
     end
     
     def downloadKB(bodyRequest)
@@ -54,7 +54,7 @@ class QnaMaker
             http.request(request)
         end
 
-        puts response.body 
+        response.body 
     end
     
     def generateAnswer(bodyRequest)
@@ -92,7 +92,7 @@ class QnaMaker
             http.request(request)
         end
         
-        puts response.body
+        response.body
     end
     
     def trainKB(bodyRequest)
@@ -112,7 +112,7 @@ class QnaMaker
             http.request(request)
         end
         
-        puts response.body
+        response.body
     end
     
     def updateKB(bodyRequest)
@@ -132,6 +132,6 @@ class QnaMaker
             http.request(request)
         end
         
-        puts response.body
+        response.body
     end
 end
