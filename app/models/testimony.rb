@@ -2,11 +2,11 @@ class Testimony < ActiveRecord::Base
     #attr_accessible :content, :in_response_to_id, :tweet_id
     
     
-    def self.tweetJSON(bodyRequest)
-        message = bodyRequest['question']
+    def tweetJSON(message)
+        #message = bodyRequest['question']
         current_tweet = $twitter.update(message)
 	    $best_answer[current_tweet] = nil
-	    resposta = "https://twitter.com/" + $user + "/status/" + current_tweet
+	    resposta = "https://twitter.com/ai_lassie/status/" + current_tweet.id.to_s
 	    resposta
     end
     
