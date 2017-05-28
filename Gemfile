@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rest-client'
-
+gem 'httparty'
 gem 'figaro'
 
 # API.ai 

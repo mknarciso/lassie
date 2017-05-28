@@ -1,33 +1,20 @@
 class Gerador
   def generateEntities()
     all = Resource.all;
+    count = 0
     all.each do |a|
+      if count == 40
+        sleep 30
+        count = 0
+      end
       entity = a["title"];
-      POST https://api.api.ai/v1/entities?v=20150910
-
-Headers:
-Authorization: Bearer YOUR_DEVELOPER_ACCESS_TOKEN
-Content-Type: application/json; charset=utf-8
-
-POST body:
-{
-    "name": "Appliances",
-    "entries": [{
-        "value": "Coffee Maker",
-        "synonyms": ["coffee maker", "coffee machine",  "coffee"]
-    }, {
-        "value": "Thermostat",
-        "synonyms": ["Thermostat", "heat", "air conditioning"]
-    }, {
-        "value": "Lights",
-        "synonyms": ["lights", "light", "lamps"]
-    }, {
-        "value": "Garage door",
-        "synonyms": ["garage door", "garage"]
-    }]
-}
-      
-      
+      response = HTTParty.post("https://api.api.ai/v1/entities/00329b72-22e2-46bf-93a2-cfdb1f8744e0/entries?v=20150910",
+                    :body => {:value => entity}.to_json,
+                    :headers => {
+                      'Authorization' => 'Bearer 576ae82f2a97432db10fe86b6bc425aa',
+                      'Content-Type' => 'application/json'}
+      )
+      puts response
     end
   end
   
