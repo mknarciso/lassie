@@ -81,11 +81,12 @@ class Testimony < ActiveRecord::Base
     		end
     		$best_answer[question] = answer
     
-    		if Time.now - question.created_at >= $TIME_LIMIT_SEC
+    		#if Time.now - question.created_at >= $TIME_LIMIT_SEC
+    		if answer != nil
     			delete_elements.push(question)
-    			if !answer.nil?
-    			    qa_pairs[question.full_text] = answer.full_text
-    			end
+    			#if !answer.nil?
+    			qa_pairs[question.full_text] = answer.full_text
+    			#end
     		end
     	end
     	
