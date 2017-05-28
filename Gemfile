@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # API.ai 
 gem 'api-ai-ruby'
+gem 'responders', '~> 2.0'
 
 # bootstrap style
 gem 'bootstrap-sass'
