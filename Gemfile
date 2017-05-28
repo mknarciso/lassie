@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+
+gem 'figaro'
+
 # API.ai 
 gem 'api-ai-ruby'
 gem 'responders', '~> 2.0'
@@ -7,6 +10,7 @@ gem 'responders', '~> 2.0'
 # bootstrap style
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
