@@ -30,6 +30,10 @@ class Testimony < ActiveRecord::Base
 
 # 0 requests
     def self.send_answer(question, answer)
+        resposta = answer.full_text
+        json = "{\"add\":{\"qnaPairs\":[{\"answer\":" + resposta[10, resposta.length] + ",\"question\":" + question.full_text + "}]}}"
+        json
+        #puts(json)
     end
 
 # 1 request
@@ -47,7 +51,9 @@ class Testimony < ActiveRecord::Base
     
     		if Time.now - question.created_at >= $TIME_LIMIT_SEC
     			delete_elements.push(question)
-    			send_answer(question, answer)
+    			if !answer.nil?
+    			    self.send_answer(question, answer)
+    			end
     		end
     	end
     
@@ -57,16 +63,5 @@ class Testimony < ActiveRecord::Base
     	
     	puts($best_answer)
     	
-    end
-
-# 1 request per $UPDATE_TIME_SEC sec
-    def self.keep_updating
-    	#ENV['TZ'] = 'UTC'
-    	ENV['TZ'] = 'America/Sao_Paulo'
-    	scheduler = Rufus::Scheduler.new
-    
-    	scheduler.every $UPDATE_TIME_SEC do
-    		self.update_rank
-    	end
     end
 end

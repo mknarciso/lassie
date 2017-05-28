@@ -67,4 +67,3 @@ class WebhookController < ApplicationController
         
         
 end
-
