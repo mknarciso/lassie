@@ -6,8 +6,14 @@ class WebhookController < ApplicationController
         qna = QnaMaker.new
         hash = '{"question": "' + query + '", "top": 1}'
         my_hash = JSON.parse(hash)
+        puts "\n\n\n\n"
         puts my_hash
-        answer = JSON.parse(qna.generateAnswer(JSON.generate(my_hash)))
+        ans = JSON.generate(my_hash)
+        puts ans
+        ans2 = qna.generateAnswer(ans)
+        puts ans2
+        answer = JSON.parse(ans2)
+        puts answer
         stringAnswer = CGI.unescapeHTML(answer["answers"].first["answer"]).encode("utf-8")
         
         if stringAnswer == "No good match found in the KB"
