@@ -64,6 +64,8 @@ class Testimony < ActiveRecord::Base
         
         qnamaker = QnaMaker.new
         qnamaker.updateKB(JSON.generate(json_hash))
+        qnamaker.trainKB(JSON.generate(JSON.parse('{"feedbackRecords": []}')))
+        qnamaker.publishKB(JSON.generate(JSON.parse('{}')))
     end
 
 # 1 request

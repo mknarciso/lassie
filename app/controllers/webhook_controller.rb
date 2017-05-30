@@ -3,6 +3,11 @@ class WebhookController < ApplicationController
     respond_to :json
     def api
         query = get_params[:result][:resolvedQuery]
+        #intent = get_params[:result][:action]
+        #par = get_params[:result][:parameters]
+        #if !intent.empty?
+            
+        
         qna = QnaMaker.new
         hash = '{"question": "' + query + '", "top": 1}'
         my_hash = JSON.parse(hash)
@@ -11,14 +16,19 @@ class WebhookController < ApplicationController
         answer = JSON.parse(qna.generateAnswer(JSON.generate(my_hash)))
         puts answer
         stringAnswer = CGI.unescapeHTML(answer["answers"].first["answer"]).encode("utf-8")
+        puts answer["answers"].first["score"]
+        if(answer["answers"].first["score"] < 30)
+            stringAnswer = "No good match found in the KB"
+        end
         
         if stringAnswer == "No good match found in the KB"
             testmony = Testimony.new
             resString = testmony.tweetJSON(query)
             stringAnswer = 'I still dont have this answer. However, I called my ninjas to answer it! Check it out: ' + resString
-            #parsedHash = JSON.parse(resHash)
-            #return JSON.generate(parsedHash)
         end    
+        
+        
+        
         respond_to do |format|
             format.json {
                 msg = { :speech => stringAnswer, :displayText => answer["answers"].first["answer"], :source => "api-rails-sample" }

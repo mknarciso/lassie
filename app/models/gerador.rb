@@ -1,12 +1,12 @@
 class Gerador
   def generateEntities()
     all = Resource.all;
-    count = 0
+    #count = 0
     all.each do |a|
-      if count == 40
-        sleep 30
-        count = 0
-      end
+      #if count == 30
+        sleep 3
+       # count = 0
+      #end
       entity = a["title"];
       response = HTTParty.post("https://api.api.ai/v1/entities/00329b72-22e2-46bf-93a2-cfdb1f8744e0/entries?v=20150910",
                     :body => {:value => entity}.to_json,

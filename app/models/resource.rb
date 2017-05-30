@@ -19,3 +19,12 @@ class Resource < ActiveRecord::Base
     end
   end
 end
+
+def split()
+  words = Array.new
+  allslugs = Resource.uniq.pluck(:extended_slug)
+  allslugs.each do |s|
+    words << s.split('/')
+  end
+  puts words.uniq
+end
